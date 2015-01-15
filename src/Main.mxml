@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TabbedViewNavigatorApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+								  xmlns:s="library://ns.adobe.com/flex/spark">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import views.EmotionsView;
+			import views.EvaluationView;
+			import views.LoginView;
+			
+			public var userID:String;
+			private var emotion:ArrayCollection=new ArrayCollection();
+			
+			public function loadOptionsView(user:String):void {
+				trace('called');
+				
+				userID=user;
+				var vn1:ViewNavigator = new ViewNavigator();
+				vn1.firstView = views.EmotionsView;
+				vn1.label = "Emotions View";
+				vn1.percentWidth=100;
+				
+				this.tabbedNavigator.removeAll();
+				//Bug - credit for fix: Dynamic_Internet_Dev and thread: http://forums.adobe.com/message/3702163
+				this.tabbedNavigator.validateNow();
+				this.tabbedNavigator.addItem(vn1);
+			}
+			
+			public function saveEmotion(emo:String):void {
+				emotion.addItem(emo);
+			}
+			
+			public function loadEvaluationView():void {
+				var vn1:ViewNavigator = new ViewNavigator();
+				vn1.firstView = views.EvaluationView;
+				vn1.label = "Evaluation View";
+				vn1.percentWidth=100;
+				
+				this.tabbedNavigator.removeAll();
+				//Bug - credit for fix: Dynamic_Internet_Dev and thread: http://forums.adobe.com/message/3702163
+				this.tabbedNavigator.validateNow();
+				this.tabbedNavigator.addItem(vn1);
+				
+			}
+			
+			public function sendEmail(evaluation:String):void {
+				// prepare the vars
+				var vars:URLVariables = new URLVariables();
+				vars.name = "tludmetal@gmail.com";
+				vars.email = "tludmetal@gmail.com";
+				vars.contact = "tludmetal@gmail.com";
+				vars.message = "Stundent's id: "+userID+"\nEmotions:\n";
+				for (var i:int=0;i<emotion.length;i++)
+					vars.message+=emotion.getItemAt(i)+"\n";
+				vars.message+="The evaluation was: "+evaluation;
+				vars.sex = "MR";
+				
+				// prepare the request
+				var request:URLRequest = new URLRequest("http://www.dcs.bbk.ac.uk/~jferna06/mail.php");
+				request.data = vars;
+				request.method = URLRequestMethod.GET;
+				
+				// prepare loader
+				var loader:URLLoader = new URLLoader();
+				loader.addEventListener(Event.COMPLETE,onLoadComplete);
+				loader.load(request);
+				
+				// handle the response from PHP
+				function onLoadComplete(evt:Event):void
+				{
+					evt.target.removeEventListener(Event.COMPLETE,onLoadComplete);
+					trace(evt.target.data);
+					// the output from PHP
+				}
+				var vn1:ViewNavigator = new ViewNavigator();
+				vn1.firstView = views.LoginView;
+				vn1.label = "Login";
+				vn1.percentWidth=100;
+				
+				this.tabbedNavigator.removeAll();
+				//Bug - credit for fix: Dynamic_Internet_Dev and thread: http://forums.adobe.com/message/3702163
+				this.tabbedNavigator.validateNow();
+				this.tabbedNavigator.addItem(vn1);
+				
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<s:navigators>
+		<s:ViewNavigator label="Login" firstView="views.LoginView" width="100%"/>
+	</s:navigators>
+	
+</s:TabbedViewNavigatorApplication>

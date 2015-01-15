@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		title="Login">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			
+			protected function handleLogin(event:MouseEvent):void {
+				if(username.text != "" || username.text!=null) {
+					FlexGlobals.topLevelApplication.loadOptionsView(username.text);
+				} else {
+					statusLabel.text = "Incorrect. (Try user/password)";
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout gap="10" paddingLeft="10" paddingRight="10" paddingTop="100" verticalAlign="middle"/>
+	</s:layout>
+	
+	<s:Label text="Enter the student's ID: "/>
+	<s:TextInput id="username" width="100%"/>
+	
+	<s:Button width="100%" label="Start" click="handleLogin(event)"/>
+	
+	<s:Label id="statusLabel" color="#FF0000" fontWeight="bold"/>
+	
+</s:View>

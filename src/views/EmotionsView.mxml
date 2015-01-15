@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		title="Emotions View" creationComplete="changeStyles()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			
+			public function changeStyles():void {
+				lg1.setStyle("fontSize", 18);
+				lg2.setStyle("fontSize", 19);
+			}
+			
+			protected function setEmotion(event:MouseEvent):void {
+				var date:Date=new Date();
+				FlexGlobals.topLevelApplication.saveEmotion(event.currentTarget.label+" : "+date.getUTCDate()+"-"+(date.getUTCMonth()+1)+"-"+date.getFullYear()+"---"+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+			}
+			
+			protected function goToEvaluationsView(event:MouseEvent):void {
+				FlexGlobals.topLevelApplication.loadEvaluationView();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout gap="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>
+	</s:layout>
+	<s:Label text="When the student’s state appears to change,"/>
+	<s:Label text="click their new state: "/>
+
+	<s:HGroup width="100%">
+		<s:Button width="100%" label="Confused" click="setEmotion(event)"/>
+		<s:Button width="100%" label="Frustrated" click="setEmotion(event)"/>
+	</s:HGroup>
+	<s:HGroup width="100%">
+		<s:Button width="100%" label="Bored" click="setEmotion(event)"/>
+		<s:Button width="100%" label="Surprised" click="setEmotion(event)"/>
+	</s:HGroup>
+	<s:HGroup width="100%">
+		<s:Button id="lg1" width="100%" label="Flow(engaged concentration)" click="setEmotion(event)"/>
+		<s:Button width="100%" label="Happy" click="setEmotion(event)"/>
+    </s:HGroup>
+	<s:HGroup width="100%">
+		<s:Button width="100%" label="Off-task" click="setEmotion(event)"/>
+		<s:Button id="lg2" width="100%" label="In conversation with teacher" click="setEmotion(event)"/>
+	</s:HGroup>
+	<s:Line width="100%">
+		<s:stroke>
+			<s:SolidColorStroke color="#000000" weight="3" caps="square"/>
+		</s:stroke>
+	</s:Line>
+	<s:HGroup width="100%" paddingTop="100">
+		<s:Button width="100%" label="End" click="goToEvaluationsView(event)"/>
+	</s:HGroup>
+	
+</s:View>

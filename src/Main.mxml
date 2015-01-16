@@ -22,7 +22,7 @@
 				userID=user;
 				var vn1:ViewNavigator = new ViewNavigator();
 				vn1.firstView = views.EmotionsView;
-				vn1.label = "Emotions View";
+				vn1.label = "Emotions";
 				vn1.percentWidth=100;
 				
 				this.tabbedNavigator.removeAll();
@@ -38,7 +38,7 @@
 			public function loadEvaluationView():void {
 				var vn1:ViewNavigator = new ViewNavigator();
 				vn1.firstView = views.EvaluationView;
-				vn1.label = "Evaluation View";
+				vn1.label = "Evaluation";
 				vn1.percentWidth=100;
 				
 				this.tabbedNavigator.removeAll();
